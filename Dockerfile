@@ -5,9 +5,6 @@ ENV LANG C.UTF-8
 # essential
 RUN apt-get update -qq && apt-get install -y build-essential libpq-dev cmake
 
-RUN mkdir /app
-WORKDIR /app
-
 # node
 RUN set -ex \
   && for key in \
@@ -32,10 +29,13 @@ RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-
   && rm "node-v$NODE_VERSION-linux-x64.tar.xz" SHASUMS256.txt.asc SHASUMS256.txt \
   && ln -s /usr/local/bin/node /usr/local/bin/nodejs && npm update -g
 
+# RUN mkdir /app
+# WORKDIR /app
+
 # ruby
-RUN echo 'gem: --no-rdoc --no-ri' >> /.gemrc
-ENV BUNDLE_JOBS=2 BUNDLE_PATH=/bundle BUNDLER_VERSION=1.13.6
-RUN gem install bundler -v $BUNDLER_VERSION
+# RUN echo 'gem: --no-rdoc --no-ri' >> /.gemrc
+# ENV BUNDLE_JOBS=2 BUNDLE_PATH=/bundle BUNDLER_VERSION=1.13.6
+# RUN gem install bundler -v $BUNDLER_VERSION
 
 # npm install
 # ADD package.json /app/package.json
@@ -46,4 +46,4 @@ RUN gem install bundler -v $BUNDLER_VERSION
 # ADD Gemfile.lock /app/Gemfile.lock
 # RUN bundle install
 
-EXPOSE 3000
+# EXPOSE 3000
